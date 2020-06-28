@@ -1,7 +1,9 @@
 var canvas;
 var canvasContext;
 var ballX=50;
-var ballSpeedX = 7;
+var ballY=50;
+var ballSpeedX = 10;
+var ballSpeedY = 5;
 
 window.onload = function() {
     console.log("Hello World! ");
@@ -18,7 +20,11 @@ function callBoth() {
 
 function moveEverything() {
     ballX += ballSpeedX;
-    if (ballX >= canvas.width-20 || ballX <= 20) {
+    ballY += ballSpeedY;
+    if (ballY >= canvas.height-10 || ballY <= 10) {
+        ballSpeedY = -ballSpeedY;
+    }
+    if (ballX >= canvas.width-10 || ballX <= 10) {
         ballSpeedX = -ballSpeedX;
     }
 }
@@ -33,7 +39,7 @@ function drawEverything() {
     //right player paddle
     colorRect(785,200,10,100, '#fcc');
     //the ball
-    colorCircle(ballX, 250, 10, '#ff007f');
+    colorCircle(ballX, ballY, 10, '#ff007f');
 }
 
 function colorCircle(centerX, centerY, radius, drawColor){
@@ -47,3 +53,4 @@ function colorRect( leftX, topY, width, height, drawColor) {
     canvasContext.fillStyle = drawColor ;
     canvasContext.fillRect(leftX,topY,width, height);
 }
+
