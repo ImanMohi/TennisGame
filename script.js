@@ -8,6 +8,8 @@ var ballSpeedY = 5;
 var player1Score = 0;
 var player2Score = 0;
 
+var WIN_score = 10;
+
 var paddle1Y = 250;
 var paddle2Y = 250;
 const PADDLE_HEIGHT = 100;
@@ -38,6 +40,11 @@ window.onload = function() {
 }
 
 function ballReset() {
+    if(player1Score >= WIN_score || player2Score >= WIN_score) {
+        player2Score = 0;
+        player1Score = 0;
+    }
+
     ballSpeedX = -ballSpeedX;
     ballX = canvas.width/2;
     ballY = canvas.height/2;
@@ -77,8 +84,8 @@ function moveEverything() {
             ballSpeedY = deltaY * 0.35;
         } 
         else {
-            ballReset();
             player1Score += 1;
+            ballReset();
         }
     }
     if (ballX <= 10) {
@@ -89,8 +96,8 @@ function moveEverything() {
             ballSpeedY = deltaY * 0.35;
         } 
         else {
-            ballReset(); 
             player2Score += 1;
+            ballReset(); 
         }
     }
 }
