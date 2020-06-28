@@ -7,4 +7,6 @@
 canvas {
     position: relative;
     top: 0px;
+    border-radius: 15px;
+    box-shadow: 0px -1px 40px 10px #444444;
 }
