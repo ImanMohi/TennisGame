@@ -8,7 +8,8 @@ var ballSpeedY = 5;
 var player1Score = 0;
 var player2Score = 0;
 
-var WIN_score = 10;
+var WIN_score = 3;
+var showWinScreen = false;
 
 var paddle1Y = 250;
 var paddle2Y = 250;
@@ -25,12 +26,22 @@ function calculateMousePos(evt) {
     }
 }
 
+function handleMouseClick(evt) {
+    if(showWinScreen) {
+        player1Score = 0;
+        player2Score = 0;
+        showWinScreen =  false;
+    }
+}
+
 window.onload = function() {
     console.log("Hello World! ");
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
     var framesPerSecond = 30;
     setInterval(callBoth, 1000/framesPerSecond);
+
+    canvas.addEventListener('mousedown', handleMouseClick);
 
     canvas.addEventListener('mousemove',
         function(evt) {
@@ -41,8 +52,7 @@ window.onload = function() {
 
 function ballReset() {
     if(player1Score >= WIN_score || player2Score >= WIN_score) {
-        player2Score = 0;
-        player1Score = 0;
+        showWinScreen = true;
     }
 
     ballSpeedX = -ballSpeedX;
@@ -66,6 +76,9 @@ function computerMovement() {
 }
 
 function moveEverything() {
+    if (showWinScreen) {
+        return;
+    }
     computerMovement();
 
     ballX += ballSpeedX;
@@ -102,9 +115,29 @@ function moveEverything() {
     }
 }
 
+function drawNet() {
+    for (var i=0; i<canvas.height; i+=40) {
+        colorRect(canvas.width/2-1, i, 3, 20, '#cff');
+    }
+}
+
 function drawEverything() {
     //the black table board
     colorRect( 0, 0, canvas.width, canvas.height, 'black');
+
+    if (showWinScreen) {
+        canvasContext.fillStyle='cyan';
+
+        if(player1Score >= WIN_score) {
+            canvasContext.fillText("Left player Won! ", 380, 350);
+        } else if (player2Score >= WIN_score) {
+            canvasContext.fillText("Right player Won! ", 380, 350);
+        }
+        canvasContext.fillText("click to continue", 380, 300,100);
+        return;
+    }
+
+    drawNet();
 
     //left player paddle
     colorRect(5,paddle1Y,10,PADDLE_HEIGHT, '#fcc');
