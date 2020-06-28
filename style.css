@@ -1,0 +1,9 @@
+#container {
+    text-align: center;
+    background: linear-gradient(35deg, #cff ,#ffccc7, #fcc);
+    padding: 5px;
+}
+
+canvas {
+    position: relative;
+}
